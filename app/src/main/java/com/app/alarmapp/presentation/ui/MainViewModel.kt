@@ -1,4 +1,4 @@
-package com.app.alarmapp
+package com.app.alarmapp.presentation.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -8,7 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ListingViewModel @Inject constructor(db: AppDatabase) : ViewModel() {
+class MainViewModel @Inject constructor(db: AppDatabase) : ViewModel() {
     private val userDb = db.alarmDao
 
     fun getAlarms(): LiveData<List<AlarmEntity>> {

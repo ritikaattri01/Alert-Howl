@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "alarm")
 data class AlarmEntity(
-    @PrimaryKey val id: String,
+    @PrimaryKey val id: Int,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "is_enable") val isEnabled: Boolean? = null
 )

@@ -1,4 +1,4 @@
-package com.app.alarmapp
+package com.app.alarmapp.presentation.ui
 
 import android.annotation.SuppressLint
 import android.app.AlarmManager
@@ -24,7 +24,7 @@ class SecondActivity : AppCompatActivity() {
 
     private val calender = Calendar.getInstance()
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: SecondViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,30 +74,21 @@ class SecondActivity : AppCompatActivity() {
         }
     }
 
-    private fun cancelAlarm() {
-        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-        val myIntent = Intent(applicationContext, AlarmReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(
-            applicationContext, 1, myIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT
-        )
-        alarmManager.cancel(pendingIntent)
-    }
-
     private fun startAlarm() {
         if (binding.nameEt.text.isNullOrEmpty()) {
             Toast.makeText(this, "Please enter name", Toast.LENGTH_LONG).show()
         } else {
+            val alarmId = Random().nextInt(Int.MAX_VALUE)
             viewModel.insert(
                 AlarmEntity(
-                    id = UUID.randomUUID().toString(),
+                    id = alarmId,
                     name = binding.nameEt.text.toString(),
-                    isEnabled = false
+                    isEnabled = true
                 )
             )
             val intent = Intent(this, AlarmReceiver::class.java)
             val pendingIntent = PendingIntent.getBroadcast(
-                this.applicationContext, 1, intent, 0
+                this.applicationContext, alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT
             )
             val alarmManager: AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
             alarmManager.set(

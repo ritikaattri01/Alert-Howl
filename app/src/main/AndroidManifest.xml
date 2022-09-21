@@ -10,11 +10,15 @@
         android:supportsRtl="true"
         android:name=".util.ApplicationClass"
         android:theme="@style/Theme.AlarmApp">
+        <service
+            android:name=".util.AlarmService"
+            android:enabled="true"
+            android:exported="false"/>
         <activity
-            android:name=".SecondActivity"
+            android:name=".presentation.ui.SecondActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

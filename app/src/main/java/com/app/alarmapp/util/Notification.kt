@@ -11,7 +11,7 @@ import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
-import com.app.alarmapp.MainActivity
+import com.app.alarmapp.presentation.ui.MainActivity
 import com.app.alarmapp.R
 import com.app.alarmapp.extensions.formattedDate
 import java.util.*
