@@ -1,5 +1,6 @@
 package com.app.alarmapp.extensions
 
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -21,4 +22,16 @@ fun formattedDate(date: Date): String? {
     } catch (exception: Exception) {
         ""
     }
+}
+
+fun getMilliFromDate(dateFormat: String?): Long {
+    var date = Date()
+    val formatter = SimpleDateFormat("hh:mm a")
+    try {
+        date = formatter.parse(dateFormat)
+    } catch (e: ParseException) {
+        e.printStackTrace()
+    }
+    println("Today is $date")
+    return date.time
 }

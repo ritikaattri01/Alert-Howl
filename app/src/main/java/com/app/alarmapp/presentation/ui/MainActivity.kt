@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.alarmapp.adapter.AlarmAdapter
 import com.app.alarmapp.data.local.AlarmEntity
 import com.app.alarmapp.databinding.ActivityMainBinding
+import com.app.alarmapp.extensions.getMilliFromDate
 import com.app.alarmapp.util.AlarmReceiver
 import com.app.alarmapp.util.AlarmService
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,17 +26,13 @@ class MainActivity : AppCompatActivity() {
         AlarmAdapter(
             onSwitchClicked = { it, isChecked ->
                 if (isChecked) {
-                    Toast.makeText(this, "Enable", Toast.LENGTH_LONG).show()
                     it?.let { it1 ->
-//                        startAlarm(it1)
                         viewModel.update(it)
                     }
-
                 } else {
                     cancelAlarm(it!!)
                     val intentService = Intent(applicationContext, AlarmService::class.java)
                     applicationContext.stopService(intentService)
-                    Toast.makeText(this, "Disable", Toast.LENGTH_LONG).show()
                     viewModel.update(it)
                 }
             }

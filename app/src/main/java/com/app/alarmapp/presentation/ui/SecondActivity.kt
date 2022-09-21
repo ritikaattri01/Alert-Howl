@@ -78,7 +78,7 @@ class SecondActivity : AppCompatActivity() {
         if (binding.nameEt.text.isNullOrEmpty()) {
             Toast.makeText(this, "Please enter name", Toast.LENGTH_LONG).show()
         } else {
-            val alarmId = Random().nextInt(Int.MAX_VALUE)
+            val alarmId = System.currentTimeMillis().toInt()
             viewModel.insert(
                 AlarmEntity(
                     id = alarmId,
@@ -88,7 +88,7 @@ class SecondActivity : AppCompatActivity() {
                 )
             )
             val intent = Intent(this, AlarmReceiver::class.java)
-            intent.putExtra("alarm", alarmId)
+            intent.putExtra("alarmId", alarmId)
             val pendingIntent = PendingIntent.getBroadcast(
                 this.applicationContext, alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT
             )

@@ -26,7 +26,7 @@ class AlarmAdapter(private var onSwitchClicked: (AlarmEntity?, isChecked: Boolea
         val binding =
             SingleItemAlarmBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding, onSwitchClicked = { it, isChecked ->
-            onSwitchClicked(getItem(it), isChecked)
+            onSwitchClicked(getItem(it).copy(isEnabled = isChecked), isChecked)
         })
     }
 

@@ -15,6 +15,9 @@ interface AlarmDao {
     @Query("SELECT * FROM alarm")
     fun getAlarms(): LiveData<List<AlarmEntity>>
 
+    @Query("Select is_enable from alarm where id = :alarmId")
+    fun isEnabled(alarmId: Int) : Int
+
     @Insert
     suspend fun insert(data: AlarmEntity?)
 
