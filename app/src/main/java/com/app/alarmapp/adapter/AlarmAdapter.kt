@@ -49,7 +49,7 @@ class AlarmAdapter(private var onSwitchClicked: (AlarmEntity?) -> Unit) :
         }
 
         fun setData(alarm: AlarmEntity) {
-            binding.itemAlarmTime.text = alarm.name
+            binding.itemAlarmTime.text = alarm.time
             binding.actionSwitch.isChecked = alarm.isEnabled == true
         }
     }

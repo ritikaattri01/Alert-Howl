@@ -8,5 +8,6 @@ import androidx.room.PrimaryKey
 data class AlarmEntity(
     @PrimaryKey val id: Int,
     @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "is_enable") val isEnabled: Boolean? = null
+    @ColumnInfo(name = "is_enable") val isEnabled: Boolean? = null,
+    @ColumnInfo(name = "time") val time: String? = null,
 )

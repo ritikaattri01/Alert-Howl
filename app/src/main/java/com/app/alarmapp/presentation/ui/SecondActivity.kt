@@ -83,7 +83,8 @@ class SecondActivity : AppCompatActivity() {
                 AlarmEntity(
                     id = alarmId,
                     name = binding.nameEt.text.toString(),
-                    isEnabled = true
+                    isEnabled = true,
+                    time = formattedDate(calender.time)
                 )
             )
             val intent = Intent(this, AlarmReceiver::class.java)

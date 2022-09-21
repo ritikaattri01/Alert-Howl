@@ -31,11 +31,6 @@ class MainActivity : AppCompatActivity() {
 //                    alarm.schedule(getContext());
 //                    alarmsListViewModel.update(alarm);
 //                }
-                if (it?.isEnabled == true) {
-//                    cancelAlarm(it)
-                } else {
-//                    cancelAlarm(it!!)
-                }
             }
         )
     }
