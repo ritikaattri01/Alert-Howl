@@ -2,16 +2,14 @@ package com.app.alarmapp.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.app.alarmapp.data.local.AlarmEntity
 import com.app.alarmapp.databinding.SingleItemAlarmBinding
-import com.google.android.material.snackbar.Snackbar
 
 
-class AlarmAdapter(private var onSwitchClicked: (AlarmEntity?) -> Unit) :
+class AlarmAdapter(private var onSwitchClicked: (AlarmEntity?, isChecked: Boolean) -> Unit) :
     ListAdapter<AlarmEntity, AlarmAdapter.MyViewHolder>(
         object : DiffUtil.ItemCallback<AlarmEntity>() {
             override fun areItemsTheSame(oldItem: AlarmEntity, newItem: AlarmEntity): Boolean {
@@ -27,8 +25,8 @@ class AlarmAdapter(private var onSwitchClicked: (AlarmEntity?) -> Unit) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding =
             SingleItemAlarmBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MyViewHolder(binding, onSwitchClicked = {
-            onSwitchClicked(getItem(it))
+        return MyViewHolder(binding, onSwitchClicked = { it, isChecked ->
+            onSwitchClicked(getItem(it), isChecked)
         })
     }
 
@@ -38,13 +36,13 @@ class AlarmAdapter(private var onSwitchClicked: (AlarmEntity?) -> Unit) :
 
     class MyViewHolder(
         private val binding: SingleItemAlarmBinding,
-        val onSwitchClicked: ((Int) -> Unit)?
+        val onSwitchClicked: ((Int, Boolean) -> Unit)?
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.actionSwitch.setOnClickListener {
-                onSwitchClicked?.invoke(adapterPosition)
+            binding.actionSwitch.setOnCheckedChangeListener { _, isChecked ->
+                onSwitchClicked?.invoke(adapterPosition, isChecked)
             }
         }
 

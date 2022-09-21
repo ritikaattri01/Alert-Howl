@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -22,15 +23,21 @@ class MainActivity : AppCompatActivity() {
 
     private val mainAdapter: AlarmAdapter by lazy {
         AlarmAdapter(
-            onSwitchClicked = {
-                cancelAlarm(it!!)
-//                if (alarm.isStarted()) {
-//                    alarm.cancelAlarm(getContext());
-//                    alarmsListViewModel.update(alarm);
-//                } else {
-//                    alarm.schedule(getContext());
-//                    alarmsListViewModel.update(alarm);
-//                }
+            onSwitchClicked = { it, isChecked ->
+                if (isChecked) {
+                    Toast.makeText(this, "Enable", Toast.LENGTH_LONG).show()
+                    it?.let { it1 ->
+//                        startAlarm(it1)
+                        viewModel.update(it)
+                    }
+
+                } else {
+                    cancelAlarm(it!!)
+                    val intentService = Intent(applicationContext, AlarmService::class.java)
+                    applicationContext.stopService(intentService)
+                    Toast.makeText(this, "Disable", Toast.LENGTH_LONG).show()
+                    viewModel.update(it)
+                }
             }
         )
     }
@@ -72,8 +79,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun cancelAlarm(alarm: AlarmEntity) {
-        val intentService = Intent(applicationContext, AlarmService::class.java)
-        applicationContext.stopService(intentService)
         val intent = Intent(this, AlarmReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(
             applicationContext,
@@ -84,5 +89,4 @@ class MainActivity : AppCompatActivity() {
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
         alarmManager.cancel(pendingIntent)
     }
-
 }

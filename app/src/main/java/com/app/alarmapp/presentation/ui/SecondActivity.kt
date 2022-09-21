@@ -88,6 +88,7 @@ class SecondActivity : AppCompatActivity() {
                 )
             )
             val intent = Intent(this, AlarmReceiver::class.java)
+            intent.putExtra("alarm", alarmId)
             val pendingIntent = PendingIntent.getBroadcast(
                 this.applicationContext, alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT
             )

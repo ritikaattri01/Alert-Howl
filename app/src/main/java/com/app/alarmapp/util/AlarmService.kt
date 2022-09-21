@@ -16,10 +16,11 @@ class AlarmService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        mp?.start()
+        val alarmId = intent?.getIntExtra("alarmId", 0)
         val notificationUtils = NotificationUtils(applicationContext)
         val notification = notificationUtils.getNotificationBuilder().build()
-        notificationUtils.getManager().notify(150, notification)
+        notificationUtils.getManager().notify(alarmId!!, notification)
+        mp?.start()
         return START_NOT_STICKY
     }
 
