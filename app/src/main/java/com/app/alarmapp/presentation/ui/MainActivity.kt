@@ -4,7 +4,6 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.alarmapp.adapter.AlarmAdapter
 import com.app.alarmapp.data.local.AlarmEntity
 import com.app.alarmapp.databinding.ActivityMainBinding
-import com.app.alarmapp.extensions.getMilliFromDate
 import com.app.alarmapp.util.AlarmReceiver
 import com.app.alarmapp.util.AlarmService
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,8 +29,9 @@ class MainActivity : AppCompatActivity() {
                     }
                 } else {
                     cancelAlarm(it!!)
-                    val intentService = Intent(applicationContext, AlarmService::class.java)
-                    applicationContext.stopService(intentService)
+                    val intent = Intent(this, AlarmService::class.java)
+                    intent.action = AlarmService.ACTION_STOP_FOREGROUND_SERVICE
+                    startService(intent)
                     viewModel.update(it)
                 }
             }

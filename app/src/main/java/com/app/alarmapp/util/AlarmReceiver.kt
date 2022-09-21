@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import com.app.alarmapp.di.AppModule
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
@@ -18,10 +19,15 @@ class AlarmReceiver : BroadcastReceiver() {
         val alarmDao = AppModule().provideDataBase(application!!).alarmDao
         val alarmId = intent?.getIntExtra("alarmId", 0) ?: 0
         val i = Intent(context, AlarmService::class.java)
+        i.action = AlarmService.ACTION_START_FOREGROUND_SERVICE
 
         GlobalScope.launch {
             if(alarmDao.isEnabled(alarmId) == 1) {
-                context.startService(i)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    context.startForegroundService(i)
+                }else{
+                    context.startService(i)
+                }
             }
         }
 
